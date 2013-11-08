@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <base href="/" />
+    <link rel="stylesheet" type="text/css" href="/css/master.css" />
+      <script>
+          function create()
+          {
+              var SellerName = 'Artsem';
+              var SellerEmail = 'bazilio.rodger@gmail.com';
+              var SellerTel = '+375292708568';
+              var SellerAddress = 'Minsk city, st. Kazincja 89/2, 156';
+              var Title = 'Monet of King';
+              var Year = 1958;
+              var Denomination = 60;
+              var SalePriceMin = 5.00;
+              var SalePriceMax = 10.00;
+              var Description = 'Very good, fine monet';
+              var element = ['SellerName','SellerEmail','SellerTel','SellerAddress','Title','Year','Denomination','SalePriceMin','SalePriceMax','Description'];
+              for(var i=0; i<element.length;i++)
+              {
+                  var o = document.getElementById(element[i]);
+                  o.value = eval(element[i]);
+              }
+
+
+          }
+      </script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="logo">
+        <img src="/images/logo.gif" />
+      </div>
+    
+
+    
+    <div id="content">
+      <?php echo $this->layout()->content ?>
+    </div>
+    
+
+  </body>
+</html>
