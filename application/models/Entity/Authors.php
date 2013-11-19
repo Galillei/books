@@ -31,6 +31,20 @@ class Authors
     /**
      * @var string
      *
+     * @Column(name="midlename", type="string", length=128, nullable=true)
+     */
+    private $midlename;
+
+    /**
+     * @var string
+     *
+     * @Column(name="surname", type="string", length=128, nullable=true)
+     */
+    private $surname;
+
+    /**
+     * @var string
+     *
      * @Column(name="Biography", type="text", nullable=false)
      */
     private $biography;
@@ -67,6 +81,52 @@ class Authors
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set midlename
+     *
+     * @param string $midlename
+     * @return Authors
+     */
+    public function setMidlename($midlename)
+    {
+        $this->midlename = $midlename;
+
+        return $this;
+    }
+
+    /**
+     * Get midlename
+     *
+     * @return string 
+     */
+    public function getMidlename()
+    {
+        return $this->midlename;
+    }
+
+    /**
+     * Set surname
+     *
+     * @param string $surname
+     * @return Authors
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * Get surname
+     *
+     * @return string 
+     */
+    public function getSurname()
+    {
+        return $this->surname;
     }
 
     /**

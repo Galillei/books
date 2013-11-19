@@ -20,6 +20,7 @@ class Catalog_AdminItemController extends Zend_Controller_Action
         else{
             $this->_helper->layout->setLayout('admin');
         }
+
     }
     public function indexAction()
     {
@@ -28,6 +29,8 @@ class Catalog_AdminItemController extends Zend_Controller_Action
     }
     public function init()
     {
-
+//
+//       $this->view->addHelperPath("ZendX/JQuery/View/Helper", "ZendX_JQuery_View_Helper");
     }
+
 } 
