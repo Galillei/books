@@ -8,4 +8,7 @@ $("#addAuthor-element").on('click',function(){
 $("#addPublisher").on('click',function(){
         window.location = "/admin/catalog/add/publisher";
 });
+$("#addCategory-element").on('click',function(){
+        window.location = "/admin/catalog/add/category";
+});
 })

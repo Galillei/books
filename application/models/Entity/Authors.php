@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Authors
  *
- * @Table(name="authors")
+ * @Table(name="authors", indexes={@Index(name="Name_midlename_surname", columns={"name", "surname", "lastname"})})
  * @Entity
  */
 class Authors
@@ -24,16 +24,9 @@ class Authors
     /**
      * @var string
      *
-     * @Column(name="Name", type="string", length=255, nullable=false)
+     * @Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
-
-    /**
-     * @var string
-     *
-     * @Column(name="midlename", type="string", length=128, nullable=true)
-     */
-    private $midlename;
 
     /**
      * @var string
@@ -45,9 +38,23 @@ class Authors
     /**
      * @var string
      *
+     * @Column(name="lastname", type="string", length=128, nullable=true)
+     */
+    private $lastname;
+
+    /**
+     * @var string
+     *
      * @Column(name="Biography", type="text", nullable=false)
      */
     private $biography;
+
+    /**
+     * @var string
+     *
+     * @Column(name="picturePath", type="string", length=255, nullable=true)
+     */
+    private $picturepath;
 
 
     /**
@@ -84,29 +91,6 @@ class Authors
     }
 
     /**
-     * Set midlename
-     *
-     * @param string $midlename
-     * @return Authors
-     */
-    public function setMidlename($midlename)
-    {
-        $this->midlename = $midlename;
-
-        return $this;
-    }
-
-    /**
-     * Get midlename
-     *
-     * @return string 
-     */
-    public function getMidlename()
-    {
-        return $this->midlename;
-    }
-
-    /**
      * Set surname
      *
      * @param string $surname
@@ -130,6 +114,29 @@ class Authors
     }
 
     /**
+     * Set lastname
+     *
+     * @param string $lastname
+     * @return Authors
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string 
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
      * Set biography
      *
      * @param string $biography
@@ -150,5 +157,28 @@ class Authors
     public function getBiography()
     {
         return $this->biography;
+    }
+
+    /**
+     * Set picturepath
+     *
+     * @param string $picturepath
+     * @return Authors
+     */
+    public function setPicturepath($picturepath)
+    {
+        $this->picturepath = $picturepath;
+
+        return $this;
+    }
+
+    /**
+     * Get picturepath
+     *
+     * @return string 
+     */
+    public function getPicturepath()
+    {
+        return $this->picturepath;
     }
 }

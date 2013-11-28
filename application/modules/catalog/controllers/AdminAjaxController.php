@@ -34,4 +34,18 @@ class Catalog_AdminAjaxController extends Zend_Controller_Action
            $author = $authors->searchAuthors($search);
            $this->_helper->json($author);
        }
+    public function nameauthorAction()
+    {
+        $authors = new Application_Model_Ajax_Ajax();
+        $search = $this->_getParam('term');
+        $author = $authors->searchNameAuthors($search);
+        $this->_helper->json($author);
+    }
+    public function lastnameauthorAction()
+    {
+        $authors = new Application_Model_Ajax_Ajax();
+        $search = $this->_getParam('term');
+        $author = $authors->searchLastNameAuthors($search);
+        $this->_helper->json($author);
+    }
 } 
