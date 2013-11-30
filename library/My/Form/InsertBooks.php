@@ -3,9 +3,27 @@
 class My_Form_InsertBooks extends Zend_Form
 {
     private $em;
+    private $config;
+
+    /**
+     * @param \Zend_Config_Ini $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return \Zend_Config_Ini
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
     public function init()
     {
         $this->em = Zend_Registry::getInstance()->get('entitymanager');
+        $this->setConfig(new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini','production'));
         $this->setAction('')
             ->setMethod('post');
 //        category
@@ -55,9 +73,14 @@ class My_Form_InsertBooks extends Zend_Form
             ->addValidator('Isbn')
             ->addFilter('StringTrim')
             ->addFilter('HtmlEntities');
-        $picture = new Zend_Form_Element_File('pictures/books');
-        $picture->setLabel('Pictures');
-        $picture->addValidator('IsImage');
+        $picture = new Zend_Form_Element_File('pictures/authors/');
+        $picture->setLabel('Pictures')
+            ->setDestination($this->getConfig()->public->dir->images->books);
+        $picture->addValidator('IsImage')
+            ->addValidator('Count',true,1)
+            ->addValidator(new My_Validator_CheckNameFile($picture->getFileName()))
+            ->addValidator('Size',true,102400)
+            ->addValidator(new Zend_Validate_File_ImageSize(array('minwidth'=>100,'maxwidth'=>300,'minheight'=>100,'maxheight'=>300)));
         $synopsis = new Zend_Form_Element_Text('synopsis');
         $synopsis->setLabel('Synopsis:')
             ->setOptions(array('size'=>26))
@@ -98,6 +121,10 @@ class My_Form_InsertBooks extends Zend_Form
             ->addValidator('Int')
             ->addFilter('StringTrim')
             ->addFilter('HtmlEntities');
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit->setLabel('Enter:')
+            ->setOrder(100)
+            ->setOptions(array('class'=>'submit'));
         $this->addElement($category);
         $this->addElement($addCategory);
         $this->addElement($name);
@@ -114,6 +141,7 @@ class My_Form_InsertBooks extends Zend_Form
         $this->addElement($datePicker);
         $this->addElement($price);
         $this->addElement($countBooks);
+        $this->addElement($submit);
 
 
     }

@@ -45,6 +45,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     public function _initView()
     {
         $view = new Zend_View();
+        $view->addHelperPath(APPLICATION_PATH. "/../library/My/Helpers/",'My_View_Helper_');
         $view->doctype('XHTML1_STRICT');
         return $view;
     }

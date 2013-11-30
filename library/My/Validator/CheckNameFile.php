@@ -12,16 +12,21 @@ class My_Validator_CheckNameFile extends Zend_Validate_Abstract
     protected $_messageTemplates = array(
         self::CHECKNAMEFILE=>" This directory has file with name '%value%', please rename your file"
     );
+    protected $filename;
 
+    public function __construct($name)
+    {
+       $this->filename = $name;
+    }
     public function isValid($value)
     {
-        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini','production');
-        $pathToFile = $config->public->dir->images->authors;
-        $fileName =  $_FILES['picturesauthors']['name'];
-        $allPathAndFile = $pathToFile.'/'.$fileName;
-        if(file_exists($allPathAndFile))
+
+
+        if(file_exists($this->filename))
         {
-          $this->_throw($fileName,self::CHECKNAMEFILE);
+          $fileNameShort = explode('/',$this->filename);
+
+          $this->_throw(array_pop($fileNameShort),self::CHECKNAMEFILE);
           return false;
         }
         return true;

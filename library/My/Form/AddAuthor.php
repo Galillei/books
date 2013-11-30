@@ -8,8 +8,26 @@
 
 class My_Form_AddAuthor extends Zend_Form
 {
+    private $config;
+
+    /**
+     * @param \Zend_Config_Ini $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return \Zend_Config_Ini
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
     public function init()
     {
+        $this->setConfig(new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini','production'));
         $this->setAction('')
             ->setMethod('post');
         $name = new ZendX_JQuery_Form_Element_AutoComplete('name');
@@ -40,11 +58,12 @@ class My_Form_AddAuthor extends Zend_Form
             ->addFilter('StringTrim');
         $picture = new Zend_Form_Element_File('pictures/authors/');
         $picture->setLabel('Pictures')
-                ->setDestination(APPLICATION_PATH.'/../'.'public/pictures/authors');
+                ->setDestination($this->getConfig()->public->dir->images->authors);
         $picture->addValidator('IsImage')
                 ->addValidator('Count',true,1)
-                ->addValidator(new My_Validator_CheckNameFile())
-                ->addValidator('Size',true,102400);
+                ->addValidator(new My_Validator_CheckNameFile($picture->getFileName()))
+                ->addValidator('Size',true,102400)
+                ->addValidator(new Zend_Validate_File_ImageSize(array('minwidth'=>100,'maxwidth'=>300,'minheight'=>100,'maxheight'=>300)));
         $biography = new Zend_Form_Element_Textarea('biography');
         $biography->setLabel('Biography');
         $biography->setOptions(array('rows'=>'10','cols'=>'40'))

@@ -18,7 +18,7 @@ class Catalog_AdminItemController extends Zend_Controller_Action
             $this->redirect('/login');
         }
         else{
-            $this->_helper->layout->setLayout('admin');
+            $this->_helper->layout->setLayout('admin-css');
         }
 
     }
@@ -41,7 +41,6 @@ class Catalog_AdminItemController extends Zend_Controller_Action
         {
             if($form->isValid($this->getRequest()->getPost())){
                 $values = $form->getValues();
-                var_dump($values);
                 $check = new My_Check_Value($values['name'],$values['surname'],$values['lastname'],'Authors');
                 if($check->authenticate())
                 {
@@ -73,6 +72,55 @@ class Catalog_AdminItemController extends Zend_Controller_Action
         }
     }
 
+    public function categoryAction()
+    {
+        $form = new My_Form_AddCategory();
+        $this->view->form = $form;
+        if($this->getRequest()->isPost())
+        {
+            if($form->isValid($this->getRequest()->getPost())){
+                $values = $form->getValues();
+                if($form->checkNullParent->isChecked())
+                {
+                    $parentCategory = 0;
+                }
+                else{
+                    $parentCategory = $values['CategoryID'];
+                }
+                $insertCategory = new Categories();
+                $insertCategory->setName($values['category'])
+                               ->setParentcategory($parentCategory);
+                $em = Zend_Registry::get('entitymanager');
+                $em->persist($insertCategory);
+                $em->flush();
+                $this->_helper->getHelper('FlashMessenger')->addMessage('The category will be insert');
+                $this->redirect('/admin/catalog/item/success');
+            }
+        }
+    }
+
+    public function publisherAction()
+    {
+        $form = new My_Form_AddPublisher();
+        $this->view->form = $form;
+        if($this->getRequest()->isPost())
+        {
+            if($form->isValid($this->getRequest()->getPost())){
+                $values = $form->getValues();
+                $insertPublisher = new Publishers();
+                $insertPublisher->setName($values['id_publisher']);
+                $insertPublisher->setDescription('description');
+                $em = Zend_Registry::get('entitymanager');
+                $em->persist($insertPublisher);
+                $em->flush();
+                $this->_helper->getHelper('FlashMessenger')->addMessage('The publisher will be insert');
+                $this->redirect('/admin/catalog/item/success');
+            }
+
+        }
+
+    }
+
     public function successAction()
     {
         if($this->_helper->getHelper('FlashMessenger')->getMessages())
@@ -84,5 +132,7 @@ class Catalog_AdminItemController extends Zend_Controller_Action
             $this->redirect('/admin/catalog/item/index');
         }
     }
+
+
 
 } 
