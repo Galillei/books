@@ -25,6 +25,12 @@ class My_Form_AddAuthor extends Zend_Form
     {
         return $this->config;
     }
+    public $elementDecorators = array(
+        'ViewHelper',
+        'Errors',
+        'HtmlTag',
+        'Label'
+    );
     public function init()
     {
         $this->setConfig(new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini','production'));
@@ -34,28 +40,29 @@ class My_Form_AddAuthor extends Zend_Form
         $name->setLabel('Name:');
         $name->setJQueryParams(array('source'=>'/admin/catalog/ajax/authors/name', 'minLength'=>'3'))
             ->setOptions(array('size'=>36))
+            ->setRequired('true')
             ->addFilter('HtmlEntities')
-            ->addFilter('StringTrim');
-//        $name = new Zend_Form_Element_Text('name');
-//        $name->setLabel('Name:')
-//            ->setOptions(array('size'=>'36'))
-//            ->setRequired('true')
-//            ->addFilter('HtmlEntities')
-//            ->addFilter('StringTrim');
+            ->addFilter('StringTrim')
+            ->getDecorator('Errors')->setOption('class','notification-input ni-error');
 
         $surname = new ZendX_JQuery_Form_Element_AutoComplete('surname');
         $surname->setLabel('Surname:');
         $surname->setJQueryParams(array('source'=>'/admin/catalog/ajax/authors/name', 'minLength'=>'3'))
             ->setOptions(array('size'=>36))
+            ->setRequired('true')
             ->addFilter('HtmlEntities')
-            ->addFilter('StringTrim');
+            ->addFilter('StringTrim')
+            ->getDecorator('Errors')->setOption('class','notification-input ni-error');
 
         $lastname = new ZendX_JQuery_Form_Element_AutoComplete('lastname');
         $lastname->setLabel('Last name:');
         $lastname->setJQueryParams(array('source'=>'/admin/catalog/ajax/authors/lastname', 'minLength'=>'3'))
+            ->setRequired('true')
             ->setOptions(array('size'=>36))
             ->addFilter('HtmlEntities')
-            ->addFilter('StringTrim');
+            ->addFilter('StringTrim')
+            ->getDecorator('Errors')->setOption('class','notification-input ni-error');
+
         $picture = new Zend_Form_Element_File('pictures/authors/');
         $picture->setLabel('Pictures')
                 ->setDestination($this->getConfig()->public->dir->images->authors);
@@ -66,20 +73,29 @@ class My_Form_AddAuthor extends Zend_Form
                 ->addValidator(new Zend_Validate_File_ImageSize(array('minwidth'=>100,'maxwidth'=>300,'minheight'=>100,'maxheight'=>300)));
         $biography = new Zend_Form_Element_Textarea('biography');
         $biography->setLabel('Biography');
-        $biography->setOptions(array('rows'=>'10','cols'=>'40'))
+        $biography->setOptions(array('rows'=>'10','cols'=>'50'))
                   ->setRequired('true')
                   ->addFilter('HtmlEntities')
-                  ->addFilter('StringTrim');
+                  ->addFilter('StringTrim')
+                  ->getDecorator('Errors')->setOption('class','notification-input ni-error');
+
         $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel('Enter:')
-            ->setOrder(100)
-            ->setOptions(array('class'=>'submit'));
+        $submit->setOptions(array('class'=>'submit','name'=>'Enter'));
+        $addAuthor = new Zend_Form_Element_Submit('submit-button');
+        $addAuthor->setOptions(array('class'=>'submit'))
+                    ->setLabel("Добавить ещё автора");
+        $addAuthor->setDecorators(array(
+            'ViewHelper',
+            'Errors',
+            array('HtmlTag', array('tag'=>'dd','class'=>'inline_element'))
+        ));
         $this->addElement($name);
         $this->addElement($surname);
         $this->addElement($lastname);
         $this->addElement($picture,'photo');
         $this->addElement($biography);
         $this->addElement($submit);
+        $this->addElement($addAuthor);
 
     }
 } 
