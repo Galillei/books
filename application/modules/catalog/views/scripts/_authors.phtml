@@ -1,0 +1,43 @@
+<form method="<?php echo $this->element->getMethod() ?>" action="<?php echo $this->element->getAction() ?>" id="<?php echo ($this->element->getId()) ?>" class="<?php echo($this->class) ?>">
+   <?php
+    $number = 1;
+    $i = 0;
+    $index=0;
+    $checkBox1 = new Zend_Form_Element_Checkbox('check_all');
+    $checkBox1->setOptions(array('id'=>'all_check'));
+   $checkBox1->setCheckedValue('all');
+    $checkBox1->setDecorators(array(
+        'ViewHelper'
+    ));
+    $checkBoxes = $this->element->getElements();
+    $data = $this->data;
+    $name = $this->tableRows;
+   $authorTable ='<table id="myTable" class="tablesorter">
+            <thead>
+            <tr>
+                <th style="width:5%">#</th>
+                <th style="width:20%">Name</th>
+                <th style="width:21%">Surname</th>
+                <th style="width:13%">LastName</th>
+                <th style="width:60%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>';
+    $authorTable .= '<div id="checkbox_img">'.$checkBox1.
+        '<a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'"><img class = "all_edit" src="/images/pencil.gif"  width="16" height="16" alt="edit" /></a>'.
+        '<a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'"><img src="/images/bin.gif"  width="16" height="16" alt="delete" /></a></div>';
+    foreach($data as $authors)
+    {
+        $authorTable .='<tr><td class="align-center">'.$number++.'</td>';
+        $authorTable .='<td><a href="'.$this->view->url(array('id'=>$authors[$name[$i]]),'admin-catalog-display-author-id').'">'.$authors[$name[$i+1]].'</td>';
+        $authorTable .='<td>'.$authors[$name[$i+2]].'</td>';
+        $authorTable .='<td>'.$authors[$name[$i+3]].'</td>';
+        $authorTable.='<td>'.$checkBoxes[$this->check.$index++]->setCheckedValue($authors[$name[$i]]).'
+            <a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'">'.'<img class = "all_edit" src="/images/pencil.gif"  width="16" height="16" alt="edit" /></a>'.
+            '<a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'">'.'<img src="/images/bin.gif"  width="16" height="16" alt="delete" /></a></td>';
+        $authorTable.= '</tr>';
+    }
+        $authorTable.='</tbody></table>';
+    echo $authorTable;
+    ?>
+ </form>

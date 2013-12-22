@@ -87,7 +87,7 @@ class My_Form_AddAuthor extends Zend_Form
         $addAuthor->setDecorators(array(
             'ViewHelper',
             'Errors',
-            array('HtmlTag', array('tag'=>'dd','class'=>'inline_element'))
+            array('HtmlTag', array('tag'=>'dd','class'=>'inlines_element'))
         ));
         $this->addElement($name);
         $this->addElement($surname);

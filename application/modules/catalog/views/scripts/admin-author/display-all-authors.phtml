@@ -1,23 +1,11 @@
 
 <div class="module">
     <div class="module-table-body">
-        <table id="myTable" class="tablesorter">
-            <thead>
-            <tr>
-                <th style="width:5%">#</th>
-                <th style="width:20%">Name</th>
-                <th style="width:21%">Surname</th>
-                <th style="width:13%">LastName</th>
-                <th style="width:60%">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <form enctype="multipart/form-data" action="" method="post">
-            <?php
-           echo ($this->authors());
-             ?>
-            </form>
+           <?php
+            echo ($this->authors());
+            ?>
+        </div>
+    </div>
 
-            </tbody>
-        </table>
+
 

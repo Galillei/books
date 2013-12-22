@@ -24,10 +24,30 @@ class Catalog_AdminAuthorController extends Zend_Controller_Action
 
    public function displayAllAuthorsAction()
    {
-
    }
    public function displayAuthorAction()
    {
        var_dump($this->getAllParams());
    }
+   public function editAuthorsAction()
+    {
+
+        $array = $this->getParam('check');
+        if($array===null)
+        {
+            $this->redirect('/admin/catalog/display/authors/');
+        }
+        else
+        {
+            $newArray = array_filter($array,'strlen');
+            $this->view->newarray = $newArray;
+        }
+
+
+    }
+
+    public function updateAuthorsDateAction()
+    {
+        var_dump($this->getAllParams());
+    }
 } 
