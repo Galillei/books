@@ -18,7 +18,7 @@ class My_View_Helper_Authors extends Zend_View_Helper_Abstract
     private function createForms()
     {
         $form = new Zend_Form('form');
-        $form->setMethod('post');
+        $form->setMethod('get');
         $form->setAction('/admin/catalog/edit/authors/');
         $form->setOptions(array('id'=>'check_form'));
         $lenght = count($this->listOfAuthors);

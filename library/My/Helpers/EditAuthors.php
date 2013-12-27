@@ -34,11 +34,12 @@ class My_View_Helper_EditAuthors extends Zend_View_Helper_Abstract
               }
               $i++;
               $form->setElementsBelongTo($i);
-
               $array[] = $form;
+
           }
+
         $parentForm->addSubForms($array);
         $parentForm->addSubmit();
         return $parentForm;
     }
-} 
+}

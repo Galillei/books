@@ -41,6 +41,7 @@ class My_Form_AddAuthor extends Zend_Form
         $name->setJQueryParams(array('source'=>'/admin/catalog/ajax/authors/name', 'minLength'=>'3'))
             ->setOptions(array('size'=>36))
             ->setRequired('true')
+            ->addValidator('Alpha')
             ->addFilter('HtmlEntities')
             ->addFilter('StringTrim')
             ->getDecorator('Errors')->setOption('class','notification-input ni-error');
@@ -50,6 +51,7 @@ class My_Form_AddAuthor extends Zend_Form
         $surname->setJQueryParams(array('source'=>'/admin/catalog/ajax/authors/name', 'minLength'=>'3'))
             ->setOptions(array('size'=>36))
             ->setRequired('true')
+            ->addValidator('Alpha')
             ->addFilter('HtmlEntities')
             ->addFilter('StringTrim')
             ->getDecorator('Errors')->setOption('class','notification-input ni-error');
@@ -58,6 +60,7 @@ class My_Form_AddAuthor extends Zend_Form
         $lastname->setLabel('Last name:');
         $lastname->setJQueryParams(array('source'=>'/admin/catalog/ajax/authors/lastname', 'minLength'=>'3'))
             ->setRequired('true')
+            ->addValidator('Alpha')
             ->setOptions(array('size'=>36))
             ->addFilter('HtmlEntities')
             ->addFilter('StringTrim')

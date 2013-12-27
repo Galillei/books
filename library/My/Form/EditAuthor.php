@@ -29,7 +29,7 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
     {
         $this->setConfig(new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini','production'));
         $this->addPrefixPath('My_Decorators_Form','My/Decorators/Form/','decorator');
-        $this->setElementsBelongTo('formsAuthors');
+        $this->setName('authors');
         $id = new Zend_Form_Element_Hidden('idAuthor');
         $id->setBelongsTo('ids');
         $name = new Zend_Form_Element_Text('name');
@@ -37,12 +37,12 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
         $name->setOptions(array('size'=>36))
             ->setRequired('true')
             ->setBelongsTo('names')
+            ->addValidator('Alpha')
             ->addFilter('HtmlEntities')
-            ->addFilter('StringTrim')
-            ->getDecorator('Errors')->setOption('class','notification-input ni-error');
+            ->addFilter('StringTrim');
         $name->setDecorators(array(
             'ViewHelper',
-            'Errors',
+            array('Errors',array('class'=>'notification-input ni-error')),
             'Label',
             array('HtmlTag', array('tag'=>'div','class'=>'inlines_element'))
         ));
@@ -53,12 +53,13 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
         $surname->setOptions(array('size'=>36))
             ->setRequired('true')
             ->setBelongsTo('surnames')
+            ->addValidator('Alpha')
             ->addFilter('HtmlEntities')
-            ->addFilter('StringTrim')
-            ->getDecorator('Errors')->setOption('class','notification-input ni-error');
+            ->addFilter('StringTrim');
+
         $surname->setDecorators(array(
             'ViewHelper',
-            'Errors',
+            array('Errors',array('class'=>'notification-input ni-error')),
             'Label',
             array('HtmlTag', array('tag'=>'div','class'=>'inlines_element'))
         ));
@@ -68,26 +69,25 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
         $lastname->setRequired('true')
             ->setBelongsTo('lastnames')
             ->setOptions(array('size'=>36))
+            ->addValidator('Alpha')
             ->addFilter('HtmlEntities')
-            ->addFilter('StringTrim')
-            ->getDecorator('Errors')->setOption('class','notification-input ni-error');
+            ->addFilter('StringTrim');
+
         $lastname->setDecorators(array(
             'ViewHelper',
-            'Errors',
+            array('Errors',array('class'=>'notification-input ni-error')),
             'Label',
             array('HtmlTag', array('tag'=>'div','class'=>'inlines_element'))
         ));
 
-        $picture = new Zend_Form_Element_File('picturepath');
-        $picture->setLabel('Выберите картинку для загрузки:')
-            ->setBelongsTo('pictures')
+        $picture = new Zend_Form_Element_File('picture');
+        $picture->setLabel('Pictures')
             ->setDestination($this->getConfig()->public->dir->images->authors);
         $picture->addValidator('IsImage')
             ->addValidator('Count',true,1)
             ->addValidator(new My_Validator_CheckNameFile($picture->getFileName()))
             ->addValidator('Size',true,102400)
             ->addValidator(new Zend_Validate_File_ImageSize(array('minwidth'=>100,'maxwidth'=>300,'minheight'=>100,'maxheight'=>300)));
-        $picture->setOptions(array('nameOfPicture'=>'picture/pictyre/picture'));
         $picture->setDecorators(array(
             'File',
             'Files',
@@ -97,25 +97,23 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
             array('Errors',array('class','notification-input ni-error'))
             ));
         $checkDeletePhoto = new Zend_Form_Element_Checkbox('deletePhoto');
-        $checkDeletePhoto->setLabel('Удалить фото из базы?')
-            ->setBelongsTo('checkDeletePhotos');
+        $checkDeletePhoto->setLabel('Удалить фото из базы?');
+//            ->setBelongsTo('checkDeletePhotos');
         $checkDeletePhoto->setDecorators(array(
             'ViewHelper',
-            'Errors',
+            array('Errors',array('class'=>'notification-input ni-error')),
             'CheckBoxDeletePicture',
             array('HtmlTag', array('tag'=>'div','class'=>'inlines_element'))
         ));
         $biography = new Zend_Form_Element_Textarea('biography');
         $biography->setLabel('Biography');
         $biography->setOptions(array('rows'=>'10','cols'=>'50'))
-            ->setRequired('true')
             ->addFilter('HtmlEntities')
             ->setBelongsTo('biographyies')
-            ->addFilter('StringTrim')
-            ->getDecorator('Errors')->setOption('class','notification-input ni-error');
+            ->addFilter('StringTrim');
         $biography->setDecorators(array(
             'ViewHelper',
-            'Errors',
+            array('Errors',array('class'=>'notification-input ni-error')),
             'Label',
             array('HtmlTag', array('tag'=>'div','class'=>'inlines_element'))
         ));
@@ -125,8 +123,29 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
         $this->addElement($surname);
         $this->addElement($lastname);
         $this->addElement($biography);
-        $this->addElement($picture,'picturepath');
+//        $this->addElement($picture,'picturepath');
         $this->addElement($checkDeletePhoto);
+    }
+    public function getFileElement($name,$ids,$nameElement)
+    {
+        $picture = new Zend_Form_Element_File($name);
+        $picture->setLabel('Pictures')
+            ->setDestination($this->getConfig()->public->dir->images->authors)
+            ->setOptions(array('nameOfPicture'=>$ids,'id'=>'id'.$name));
+        $picture->addValidator('IsImage')
+            ->addValidator('Count',true,1)
+            ->addValidator(new My_Validator_CheckNameFile($picture->getFileName()))
+            ->addValidator('Size',true,102400)
+            ->addValidator(new Zend_Validate_File_ImageSize(array('minwidth'=>100,'maxwidth'=>300,'minheight'=>100,'maxheight'=>300)));
+        $picture->setDecorators(array(
+            'File',
+            array('Errors',array('class'=>'notification-input ni-error')),
+            'Files',
+            'Label',
+            array('HtmlTag', array('tag'=>'div','class'=>'inlines_element')),
+            'Description'
+        ));
+        $this->addElement($picture,$nameElement);
     }
 
 } 
