@@ -132,7 +132,4 @@ class Catalog_AdminItemController extends Zend_Controller_Action
             $this->redirect('/admin/catalog/item/index');
         }
     }
-
-
-
-} 
+}

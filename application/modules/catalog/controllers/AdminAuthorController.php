@@ -37,38 +37,22 @@ class Catalog_AdminAuthorController extends Zend_Controller_Action
         {
             $this->redirect('/admin/catalog/display/authors/');
         }
-
-            $parentForm = new My_Form_SubForms();
-
             $newArray = array_filter($array,'strlen');
             $forms = new Application_Model_Edit_Forms($newArray);
             $arrayOfForms = $forms->extractData();
-            $i = 0;
-            foreach($arrayOfForms as $forms)
-            {
-                $form = new My_Form_EditAuthor();
-                $form->populate($forms[0]);
-                if(isset($forms[0]['picturepath'])){
-                    $form->getFileElement('subForm'.$i,$forms[0]['picturepath'],'nameElement'.$i);
-                }
-                else{
-                    $form->getFileElement('subForm'.$i,$forms[0]['picturepath'],'nameElement'.$i);
-                }
-//                $form->setElementsBelongTo($i);
-                $parentForm->addSubForm($form,$i+1);
-                $i++;
-            }
-            $parentForm->addSubmit();
-        if($this->getRequest()->isPost())
+            $formForEditAuthors = new My_Form_SubForms();
+            $formForEditAuthors = $formForEditAuthors->getEditAllForms($arrayOfForms);
+         if($this->getRequest()->isPost())
         {
-            if($parentForm->isValid($this->getAllParams())){
+            if($formForEditAuthors->isValid($this->getAllParams())){
+
         }
             else{
-                $this->view->form = $parentForm;
+                $this->view->form=$formForEditAuthors;
             }
         }
         else{
-            $this->view->form =  $parentForm;
+            $this->view->form=$formForEditAuthors;
         }
 
 

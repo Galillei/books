@@ -43,5 +43,25 @@ $this->setAction('')
 
         return false;
     }
+    public function getEditAllForms(array $arrayOfForms)
+    {
+        $i = 0;
+        foreach($arrayOfForms as $forms)
+        {
+            $form = new My_Form_EditAuthor();
+            $form->populate($forms[0]);
+            if(isset($forms[0]['picturepath'])){
+                $form->getFileElement('subForm'.$i,$forms[0]['picturepath'],'nameElement'.$i);
+            }
+            else{
+                $form->getFileElement('subForm'.$i,$forms[0]['picturepath'],'nameElement'.$i);
+            }
+//                $form->setElementsBelongTo($i);
+            $this->addSubForm($form,$i+1);
+            $i++;
+        }
+        $this->addSubmit();
+        return $this;
+    }
 
 } 
