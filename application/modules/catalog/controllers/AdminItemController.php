@@ -116,9 +116,7 @@ class Catalog_AdminItemController extends Zend_Controller_Action
                 $this->_helper->getHelper('FlashMessenger')->addMessage('The publisher will be insert');
                 $this->redirect('/admin/catalog/item/success');
             }
-
         }
-
     }
 
     public function successAction()

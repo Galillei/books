@@ -36,7 +36,7 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
         $name->setLabel('Name:');
         $name->setOptions(array('size'=>36))
             ->setRequired('true')
-            ->setBelongsTo('names')
+//            ->setBelongsTo('names')
             ->addValidator('Alpha')
             ->addFilter('HtmlEntities')
             ->addFilter('StringTrim');
@@ -52,7 +52,7 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
         $surname->setLabel('Surname:');
         $surname->setOptions(array('size'=>36))
             ->setRequired('true')
-            ->setBelongsTo('surnames')
+//            ->setBelongsTo('surnames')
             ->addValidator('Alpha')
             ->addFilter('HtmlEntities')
             ->addFilter('StringTrim');
@@ -67,7 +67,7 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
         $lastname = new Zend_Form_Element_Text('lastname');
         $lastname->setLabel('Last name:');
         $lastname->setRequired('true')
-            ->setBelongsTo('lastnames')
+//            ->setBelongsTo('lastnames')
             ->setOptions(array('size'=>36))
             ->addValidator('Alpha')
             ->addFilter('HtmlEntities')
@@ -109,7 +109,7 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
         $biography->setLabel('Biography');
         $biography->setOptions(array('rows'=>'10','cols'=>'50'))
             ->addFilter('HtmlEntities')
-            ->setBelongsTo('biographyies')
+//            ->setBelongsTo('biographyies')
             ->addFilter('StringTrim');
         $biography->setDecorators(array(
             'ViewHelper',
@@ -134,7 +134,7 @@ class My_Form_EditAuthor extends Zend_Form_SubForm{
             ->setOptions(array('nameOfPicture'=>$ids,'id'=>'id'.$name));
         $picture->addValidator('IsImage')
             ->addValidator('Count',true,1)
-            ->addValidator(new My_Validator_CheckNameFile($picture->getFileName()))
+//            ->addValidator(new My_Validator_CheckNameFile($picture->getFileName()))
             ->addValidator('Size',true,102400)
             ->addValidator(new Zend_Validate_File_ImageSize(array('minwidth'=>100,'maxwidth'=>300,'minheight'=>100,'maxheight'=>300)));
         $picture->setDecorators(array(

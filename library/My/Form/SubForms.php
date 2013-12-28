@@ -43,23 +43,43 @@ $this->setAction('')
 
         return false;
     }
+    public function addIndexI($i)
+    {
+
+        $id = new Zend_Form_Element_Hidden('idIndex');
+//        $id->setBelongsTo('index');
+        $id->setValue($i);
+        $this->addElement($id);
+    }
     public function getEditAllForms(array $arrayOfForms)
     {
+        $registry = Zend_Registry::getInstance();
         $i = 0;
+        $arrayofI = [];
+        $arrayOfNameSubFormElement = [];
+        $nameOfSubForm = 'subform';
+        $nameOfFile = 'nameElement';
         foreach($arrayOfForms as $forms)
         {
             $form = new My_Form_EditAuthor();
             $form->populate($forms[0]);
+            $nameOfSubFormElement = $nameOfSubForm.$i;
+            $nameOfFileElement = $nameOfFile.$i;
             if(isset($forms[0]['picturepath'])){
-                $form->getFileElement('subForm'.$i,$forms[0]['picturepath'],'nameElement'.$i);
+                $form->getFileElement($nameOfSubFormElement,$forms[0]['picturepath'],$nameOfFileElement);
             }
             else{
-                $form->getFileElement('subForm'.$i,$forms[0]['picturepath'],'nameElement'.$i);
+                $form->getFileElement($nameOfSubFormElement.$i,$forms[0]['picturepath'],$nameOfFileElement);
             }
 //                $form->setElementsBelongTo($i);
             $this->addSubForm($form,$i+1);
+            //for use name of subform, remember it in cash
+            $arrayOfSubFormName[]=array($i+1,$nameOfFileElement);
             $i++;
         }
+
+        $registry->arrayOfSubFormName = $arrayOfSubFormName;
+//        $this->addIndexI($i);
         $this->addSubmit();
         return $this;
     }

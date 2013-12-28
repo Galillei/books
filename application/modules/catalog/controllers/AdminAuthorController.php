@@ -27,7 +27,42 @@ class Catalog_AdminAuthorController extends Zend_Controller_Action
    }
    public function displayAuthorAction()
    {
-       var_dump($this->getAllParams());
+       $id[] = $this->getParam('id');
+       $forms = new Application_Model_Edit_Forms($id);
+       $arrayOfForms = $forms->extractData();
+       $formForEditAuthors = new My_Form_SubForms();
+       $formForEditAuthors = $formForEditAuthors->getEditAllForms($arrayOfForms);
+       if($this->getRequest()->isPost())
+       {
+           if($formForEditAuthors->isValid($this->getAllParams()))
+           {
+               $arrayOfNameSubFormAndFileName = Zend_Registry::get('arrayOfSubFormName');
+               $flag = true;
+               foreach($arrayOfNameSubFormAndFileName as $oneSubForm)
+               {
+                   if (!($formForEditAuthors->getSubForm($oneSubForm[0])->$oneSubForm[1]->receive()))
+                   {
+                       $formForEditAuthors->getSubForm($oneSubForm[0])->$oneSubForm[1]->setErrorMessages(array('Error'=>'This file can\'t be write'));
+                       $flag = false;
+                   }
+               }
+               if($flag)
+               {
+                   $editAuthors = $formForEditAuthors->getValues();
+                   $update = new Application_Model_Edit_UpdateAuthors($editAuthors);
+                   $update->updateAuthors();
+                   $this->redirect('/admin/catalog/display/authors/');
+               }
+
+           }
+           else{
+               $this->view->form=$formForEditAuthors;
+           }
+       }
+       else{
+           $this->view->form=$formForEditAuthors;
+       }
+
    }
    public function editAuthorsAction()
     {
@@ -44,9 +79,27 @@ class Catalog_AdminAuthorController extends Zend_Controller_Action
             $formForEditAuthors = $formForEditAuthors->getEditAllForms($arrayOfForms);
          if($this->getRequest()->isPost())
         {
-            if($formForEditAuthors->isValid($this->getAllParams())){
+            if($formForEditAuthors->isValid($this->getAllParams()))
+            {
+               $arrayOfNameSubFormAndFileName = Zend_Registry::get('arrayOfSubFormName');
+                $flag = true;
+                foreach($arrayOfNameSubFormAndFileName as $oneSubForm)
+                {
+                   if (!($formForEditAuthors->getSubForm($oneSubForm[0])->$oneSubForm[1]->receive()))
+                   {
+                       $formForEditAuthors->getSubForm($oneSubForm[0])->$oneSubForm[1]->setErrorMessages(array('Error'=>'This file can\'t be write'));
+                       $flag = false;
+                   }
+                }
+                if($flag)
+                {
+                    $editAuthors = $formForEditAuthors->getValues();
+                    $update = new Application_Model_Edit_UpdateAuthors($editAuthors);
+                    $update->updateAuthors();
+                    $this->redirect('/admin/catalog/display/authors/');
+                }
 
-        }
+            }
             else{
                 $this->view->form=$formForEditAuthors;
             }

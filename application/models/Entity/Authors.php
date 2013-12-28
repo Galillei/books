@@ -181,4 +181,38 @@ class Authors
     {
         return $this->picturepath;
     }
+    /**
+     * @var \DateTime
+     *
+     * @Column(name="createDate", type="date", nullable=true)
+     */
+    private $createdate;
+
+
+    /**
+     * Set createdate
+     *
+     * @param \DateTime $createdate
+     * @return Authors
+     */
+    public function setCreatedate($createdate)
+    {
+        $this->createdate = $createdate;
+
+        return $this;
+    }
+
+    /**
+     * Get createdate
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedate()
+    {
+        return $this->createdate;
+    }
+    public function prePersist()
+    {
+        $this->setCreatedate(new \DateTime());
+    }
 }

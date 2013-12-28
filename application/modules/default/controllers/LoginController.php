@@ -41,7 +41,7 @@ class LoginController extends Zend_Controller_Action
                     } else {
                         $this->_helper->getHelper('FlashMessenger')
                             ->addMessage('You were successfully logged in.');
-                        $this->redirect('/login/success');
+                        $this->redirect('/admin/catalog/display/authors/');
                     }
                 } else {
                     $this->view->message =
