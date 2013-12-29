@@ -24,8 +24,7 @@
             </thead>
             <tbody>';
     $authorTable .= '<div id="checkbox_img">'.$checkBox1.
-        '<a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'"><img class = "all_edit" src="/images/pencil.gif"  width="16" height="16" alt="edit" /></a>'.
-        '<a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'"><img src="/images/bin.gif"  width="16" height="16" alt="delete" /></a></div>';
+        '<a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'"><img class = "all_edit" src="/images/pencil.gif"  width="16" height="16" alt="edit" /></a>';
     foreach($data as $authors)
     {
         $authorTable .='<tr><td class="align-center">'.$number++.'</td>';
@@ -34,7 +33,7 @@
         $authorTable .='<td>'.$authors[$name[$i+3]].'</td>';
         $authorTable.='<td>'.$checkBoxes[$this->check.$index++]->setCheckedValue($authors[$name[$i]]).'
             <a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'">'.'<img class = "all_edit" src="/images/pencil.gif"  width="16" height="16" alt="edit" /></a>'.
-            '<a href="'.$this->view->url(array('id'=>"all"),'admin-catalog-display-author-id').'">'.'<img src="/images/bin.gif"  width="16" height="16" alt="delete" /></a></td>';
+            '<a href="'.$this->view->url(array('id'=>$authors[$name[$i]]),'admin-catalog-delete-author-id').'">'.'<img src="/images/bin.gif"  width="16" height="16" alt="delete" /></a></td>';
         $authorTable.= '</tr>';
     }
         $authorTable.='</tbody></table>';

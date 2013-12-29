@@ -215,4 +215,34 @@ class Authors
     {
         $this->setCreatedate(new \DateTime());
     }
+    /**
+     * @var boolean
+     *
+     * @Column(name="visible", type="boolean", nullable=true)
+     */
+    private $visible = '0';
+
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     * @return Authors
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean 
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
 }

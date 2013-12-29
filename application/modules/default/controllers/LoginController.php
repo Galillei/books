@@ -11,10 +11,8 @@ class LoginController extends Zend_Controller_Action
 {
     public function init()
     {
-//        $this->view->addHelperPath("ZendX/JQuery/View/Helper", "ZendX_JQuery_View_Helper");
         $this->_helper->layout->setLayout('admin');
     }
-// login action
     public function indexAction()
     {
         $form = new My_Form_Login();
@@ -57,7 +55,7 @@ class LoginController extends Zend_Controller_Action
                 ->getHelper('FlashMessenger')
                 ->getMessages();
         } else {
-            $this->redirect('/');
+//            $this->redirect('/');
         }
     }
 
@@ -66,7 +64,7 @@ public function logoutAction()
     {
         Zend_Auth::getInstance()->clearIdentity();
         Zend_Session::destroy();
-        $this->_redirect('/admin/login');
+        $this->redirect('');
     }
 
 }

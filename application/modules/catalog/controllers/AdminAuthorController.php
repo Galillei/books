@@ -24,6 +24,7 @@ class Catalog_AdminAuthorController extends Zend_Controller_Action
 
    public function displayAllAuthorsAction()
    {
+
    }
    public function displayAuthorAction()
    {
@@ -98,6 +99,9 @@ class Catalog_AdminAuthorController extends Zend_Controller_Action
                     $update->updateAuthors();
                     $this->redirect('/admin/catalog/display/authors/');
                 }
+                else{
+                    $this->view->form=$formForEditAuthors;
+                }
 
             }
             else{
@@ -111,7 +115,14 @@ class Catalog_AdminAuthorController extends Zend_Controller_Action
 
     }
 
+    public function deleteAuthorAction()
+    {
+        $id = $this->getParam('id');
+        $delete = new Application_Model_Edit_DeleteAuthor($id);
+        $delete->deleteAuthor();
+        $this->redirect('/admin/catalog/display/authors/');
 
+    }
     public function updateAuthorsDateAction()
     {
 

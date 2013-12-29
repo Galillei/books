@@ -10,7 +10,7 @@ class My_Form_Login extends Zend_Form
 {
     public function init()
     {
-        $this->setAction('login')
+        $this->setAction('')
             ->setMethod('post');
 //        создаём текстовое поле для ввода имени
         $username = new Zend_Form_Element_Text('username');

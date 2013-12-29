@@ -21,6 +21,7 @@ class Application_Model_Query_AuthorList {
         $qb = $em->createQueryBuilder();
         $q = $qb->select('u.idAuthor', 'u.name','u.surname','u.lastname','u.picturepath')
             ->from('Authors','u')
+            ->Where('u.visible=1')
             ->getQuery();
         return $q->getResult();
     }

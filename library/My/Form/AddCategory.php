@@ -17,14 +17,14 @@ class My_Form_AddCategory extends Zend_Form
         $checkNullParent = new Zend_Form_Element_Checkbox('checkNullParent');
         $checkNullParent->setLabel('Category don\'t have parent:');
         $parentcategory = new Zend_Form_Element_Select('CategoryID');
-        $parentcategory->setLabel('Category:')
+        $parentcategory->setLabel('Parent Category:')
             ->setRequired(true)
             ->addValidator('Int')
             ->addFilter('HtmlEntities')
             ->addFilter('StringTrim')
             ->addFilter('StringToUpper');
         $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel('Enter:')
+        $submit->setLabel('Enter')
             ->setOrder(100)
             ->setOptions(array('class'=>'submit'));
         foreach($this->getCategory() as $c)
